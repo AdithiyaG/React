@@ -1,6 +1,9 @@
-import React  from 'react';
-import { Card, CardImg, CardBody, CardText,CardTitle,Breadcrumb,BreadcrumbItem } from 'reactstrap';
-import {Link} from 'react-router-dom'
+import React,{Component}  from 'react';
+import { Card, CardImg, CardBody, CardText,CardTitle,Breadcrumb,BreadcrumbItem} from 'reactstrap';
+import {Link} from 'react-router-dom';
+import CommentForm from './CommentFormComponent'
+
+
 
 function RenderDish({dish})
 { return(
@@ -33,39 +36,44 @@ function RenderDish({dish})
   };
 
 
-  const DishDetail = (props)=>{
-
-    if(props.dish!=null){
+  class DishDetail extends Component{
+  
+    render(){
+    if(this.props.dish!=null){
       return(
         <div className="container">
           <div className='row'>
               <Breadcrumb>
                   <BreadcrumbItem><Link to="/menu">Menu</Link></BreadcrumbItem>
-                  <BreadcrumbItem active>{props.dish.name}</BreadcrumbItem>
+                  <BreadcrumbItem active>{this.props.dish.name}</BreadcrumbItem>
                   </Breadcrumb>
                   <div className="col-12">
-                        <h3>{props.dish.name}</h3>
+                        <h3>{this.props.dish.name}</h3>
                         <hr />
                     </div>                
                 </div>
                 <div className='row'>
               <div className='col-12 col-md-5 m-1'>
-                <RenderDish dish={props.dish}/>
+                <RenderDish dish={this.props.dish}/>
               </div>
               <div className="col-12 col-md-5 m-1">
               <h4>Comments</h4>
-              <RenderComments comments={props.comments}/>
+              <RenderComments comments={this.props.comments}/>
+              <CommentForm/>
+              
             </div>
           </div>
           </div>
           
       );
-
+      
   }
   else{
       return (<div></div>);
   }
     
-  }
+  }}
+  
+
  
 export default DishDetail;
