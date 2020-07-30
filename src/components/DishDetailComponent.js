@@ -59,7 +59,8 @@ function RenderDish({dish})
               <div className="col-12 col-md-5 m-1">
               <h4>Comments</h4>
               <RenderComments comments={this.props.comments}/>
-              <CommentForm/>
+              <CommentForm addComment={this.props.addComment}
+              dishId={this.props.dish.id}/>
               
             </div>
           </div>
