@@ -4,10 +4,15 @@ import {Link} from 'react-router-dom';
 import CommentForm from './CommentFormComponent'
 import {Loading} from './LoadingComponent'
 import {baseUrl} from '../shared/baseUrl'
+import {FadeTransform,Fade,Stagger} from 'react-animation-components'
 
 
 function RenderDish({dish})
 { return(
+  <FadeTransform in 
+  transformProps={{
+      exitTransform:'scale(0.5) translateY(-50%)'
+  }}>
   <Card>
   <CardImg width="100%" src={baseUrl+dish.image} alt={dish.name}></CardImg>
   <CardBody>
@@ -15,6 +20,7 @@ function RenderDish({dish})
       <CardText>{dish.description}</CardText>
   </CardBody>
 </Card>
+</FadeTransform>
 )
  
                 
@@ -25,11 +31,15 @@ function RenderDish({dish})
         let options = { year: "numeric", month: "short", day: "numeric" };
         return comments.map(comment => (
           <ul key={comment.id} className="list-unstyled">
+            <Stagger in>
+              <Fade in>
             <li className="mb-2">{comment.comment}</li>
             <li>
               -- {comment.author},{" "}
               {new Date(comment.date).toLocaleDateString("en-US", options)}
             </li>
+            </Fade>
+            </Stagger>
           </ul>
         ));
       } else return <div />;
