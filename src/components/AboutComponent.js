@@ -1,14 +1,35 @@
 import React from 'react';
 import { Breadcrumb, BreadcrumbItem, Card, CardBody, CardHeader, Media } from 'reactstrap';
 import { Link } from 'react-router-dom';
+import { Loading } from './LoadingComponent';
+import {baseUrl} from '../shared/baseUrl'
+import {FadeTransform,Fade,Stagger} from 'react-animation-components'
 
-function RenderLeader(props)
+function RenderLeader({leader,isLoading,errMess})
 {
-    const leaders = props.leader.map((leader) => {
+    if(isLoading)
+    {
         return (
+            <Loading/>
+        )
+    }
+    else if (errMess){
+        return (
+            <h4>{errMess}</h4>
+        )
+    }
+    else{
+    const leaders = leader.map((leader) => {
+        return (
+            <FadeTransform in 
+  transformProps={{
+      exitTransform:'scale(0.5) translateY(-50%)'
+  }}>
+            <Stagger in>
+                <Fade in>
             <Media>
                  <Media left middle className='mr-5'>
-                <Media object src={leader.image} alt={leader.name}></Media>
+                <Media object src={baseUrl+leader.image} alt={leader.name}></Media>
                 </Media >
                 <Media body classname='m-5'> 
                     <Media heading>{leader.name}</Media>
@@ -21,15 +42,15 @@ function RenderLeader(props)
                 </Media>
 
             </Media>
+            </Fade>
+            </Stagger>
+            </FadeTransform>
         );
     });
     return (leaders)
-}
+}}
 
 function About(props) {
-
-    
-
     return(
         <div className="container">
             <div className="row">
@@ -86,7 +107,7 @@ function About(props) {
                 </div>
                 <div className="col-12">
                     <Media list className='mt-5'>
-                        <RenderLeader leader={props.leaders}/>
+                        <RenderLeader leader={props.leaders} isLoading={props.leadersLoading} errMess={props.leadersErrMess}/>
                     </Media>
                 </div>
             </div>
